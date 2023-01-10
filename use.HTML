@@ -1,0 +1,29 @@
+<?php
+
+// change these with your own credentials
+$app_id = 'YOUR_APP_ID';
+$app_secret = 'YOUR_APP_SECRET';
+$access_token = 'YOUR_ACCESS_TOKEN';
+
+// this is the message you want to post
+$message = 'Hello, world!';
+
+// post to the Facebook page
+$url = 'https://graph.facebook.com/YOUR_PAGE_ID/feed';
+$data = array(
+    'message' => $message,
+    'access_token' => $access_token
+);
+
+$options = array(
+    'http' => array(
+        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+        'method'  => 'POST',
+        'content' => http_build_query($data)
+    )
+);
+
+$context  = stream_context_create($options);
+$result = file_get_contents($url, false, $context);
+
+?>
